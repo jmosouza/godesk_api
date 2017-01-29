@@ -25,6 +25,18 @@ class Ticket < ApplicationRecord
   # Validate the presence of a title.
   validates :title, presence: true
 
+  # Sort results by a column and direction.
+  scope :sorted, -> (column = :updated_at, direction = :desc) do
+    order(column, direction)
+  end
+
+  # Search by title or author username.
+  scope :search, -> (query = nil) do
+    return if query.blank?
+    joins(:author).
+    where('title LIKE :q OR users.username LIKE :q', q: "%#{query}%")
+  end
+
   # Return +true+ when the +closed_at+ time is +null+.
   def is_open?
     closed_at.blank?
@@ -39,17 +51,6 @@ class Ticket < ApplicationRecord
   # Set the +closed_at+ time and return it.
   def close
     self.closed_at = Time.zone.now
-  end
-
-  # Sort results by a column and direction.
-  def self.sorted(column = :updated_at, direction = :desc)
-    order(column, direction)
-  end
-
-  # Search by title or author username.
-  def self.search(query = nil)
-    return self if query.blank?
-    like('title', query).or like('users.username', query)
   end
 
 end

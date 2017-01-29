@@ -6,8 +6,8 @@ class ApplicationRecord < ActiveRecord::Base
 
   # Compare strings by SQL like function.
   # Replace spaces by wildcard characters (%).
-  def self.like(column = nil, text = nil)
-    return self if text.blank? || column.blank?
-    where(column + ' LIKE ?', "%#{text.split.join('%')}%")
+  scope :like, -> (column = nil, text = nil) do
+    return if text.blank? || column.blank?
+    where(column + ' LIKE ?', "%#{text}%")
   end
 end

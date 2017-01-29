@@ -22,8 +22,7 @@ class V1::TicketsIndexService
   end
 
   def all_tickets
-    Ticket.joins(:author)
-          .preload(:author)
+    Ticket.includes(:author)
           .search(params[:search])
           .sorted(params[:sort], params[:dir])
           .page(params[:page])
