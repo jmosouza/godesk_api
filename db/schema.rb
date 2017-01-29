@@ -14,8 +14,8 @@ ActiveRecord::Schema.define(version: 20170128202520) do
 
   create_table "ticket_messages", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string   "body"
-    t.integer  "author_id",               unsigned: true
-    t.integer  "ticket_id",               unsigned: true
+    t.integer  "author_id",  null: false, unsigned: true
+    t.integer  "ticket_id",  null: false, unsigned: true
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["author_id"], name: "index_ticket_messages_on_author_id", using: :btree
@@ -25,7 +25,7 @@ ActiveRecord::Schema.define(version: 20170128202520) do
   create_table "tickets", unsigned: true, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string   "title",      null: false
     t.datetime "closed_at"
-    t.integer  "author_id",               unsigned: true
+    t.integer  "author_id",  null: false, unsigned: true
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["author_id"], name: "index_tickets_on_author_id", using: :btree

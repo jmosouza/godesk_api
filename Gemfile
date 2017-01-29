@@ -40,6 +40,7 @@ group :development do
 
   # Models
   gem 'annotate'
+  gem 'activerecord-import'
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
