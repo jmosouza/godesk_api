@@ -25,23 +25,31 @@ class Ticket < ApplicationRecord
   # Validate the presence of a title.
   validates :title, presence: true
 
-  ##
   # Return +true+ when the +closed_at+ time is +null+.
   def is_open?
     closed_at.blank?
   end
 
-  ##
   # Return +true+ when a call to +is_open?+ would return +false+.
   def is_closed?
     !is_open?
   end
 
-  ##
   # Close the ticket to indicate it is finished.
   # Set the +closed_at+ time and return it.
   def close
     self.closed_at = Time.zone.now
+  end
+
+  # Sort results by a column and direction.
+  def self.sorted(column = :updated_at, direction = :desc)
+    order(column, direction)
+  end
+
+  # Search by title or author username.
+  def self.search(query = nil)
+    return self if query.blank?
+    like('title', query).or like('users.username', query)
   end
 
 end

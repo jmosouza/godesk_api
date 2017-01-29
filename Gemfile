@@ -13,7 +13,7 @@ gem 'mysql2', '>= 0.3.18', '< 0.5'
 # Use Puma as the app server
 gem 'puma', '~> 3.0'
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
-# gem 'jbuilder', '~> 2.5'
+gem 'jbuilder', '~> 2.5'
 # Use ActiveModel has_secure_password
 gem 'bcrypt', '~> 3.1.7'
 
@@ -61,3 +61,6 @@ gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 # Clearly it was trying to use a namespaced model that doesn't exist, it makes sense.
 # But why does it work using the git source? They seem identical.
 gem 'knock', git: 'git@github.com:nsarno/knock.git'
+
+# Controllers
+gem 'kaminari'
