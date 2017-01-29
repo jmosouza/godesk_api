@@ -29,6 +29,7 @@ group :development, :test do
 
   # Tests
   gem 'rspec-rails', '~> 3.5'
+  gem 'jwt'
 end
 
 group :development do
