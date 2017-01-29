@@ -32,4 +32,13 @@ class User < ApplicationRecord
   has_many :tickets
   has_many :ticket_messages
 
+  ## :nodoc:
+  # Customize the knock gem behaviour (jwt).
+  # Return a valid user or +nil+ if not found.
+  #
+  # See https://github.com/nsarno/knock#customization
+  def self.from_token_request(request)
+    find_by_username request.params.dig(:auth, :username)
+  end
+
 end
