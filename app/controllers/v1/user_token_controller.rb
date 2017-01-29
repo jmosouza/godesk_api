@@ -4,7 +4,7 @@
 #
 # See https://github.com/nsarno/knock#getting-started
 
-class UserTokenController < Knock::AuthTokenController
+class V1::UserTokenController < Knock::AuthTokenController
 
   ## :nodoc:
   # Skip authenticating for the +customer_signup+ action because the user doesn't exist yet.

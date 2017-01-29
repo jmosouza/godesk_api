@@ -46,4 +46,17 @@ end
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 
 # Authentication and authorization
-gem 'knock'
+
+# TODO Identify mysterious knock issue.
+#
+# Knock was throwing an error. I switched to git source and the error is gone.
+# Yet I have not identified the difference between rubygems and git sources.
+#
+# The error:
+#   #<NameError: uninitialized constant V1::User>
+# in
+#   V1::UserTokenController
+#
+# Clearly it was trying to use a namespaced model that doesn't exist, it makes sense.
+# But why does it work using the git source? They seem identical.
+gem 'knock', git: 'git@github.com:nsarno/knock.git'
