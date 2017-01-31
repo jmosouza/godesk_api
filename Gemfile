@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 
-ruby '~> 2.4.0'
+ruby '~> 2.3.0'
 
 git_source(:github) do |repo_name|
   repo_name = "#{repo_name}/#{repo_name}" unless repo_name.include?("/")
@@ -42,7 +42,6 @@ group :development do
 
   # Models
   gem 'annotate'
-  gem 'activerecord-import'
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
@@ -66,3 +65,6 @@ gem 'knock', github: 'nsarno/knock'
 
 # Controllers
 gem 'kaminari'
+
+# Models
+gem 'activerecord-import'
