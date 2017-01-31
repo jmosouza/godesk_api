@@ -49,6 +49,4 @@ test:
 #
 production:
   <<: *default
-  database: godesk_api_production
-  username: godesk_api
-  password: <%= ENV['GODESK_API_DATABASE_PASSWORD'] %>
+  url: <%= ENV.fetch('DATABASE_URL') %>

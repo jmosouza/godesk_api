@@ -30,3 +30,8 @@ class V1::TicketsIndexService
   end
 
 end
+
+# TODO join latest message to tickets.
+# .joins('JOIN ticket_messages m1 ON tickets.id = m1.ticket_id')
+# .joins('LEFT JOIN ticket_messages m2 ON tickets.id = m2.ticket_id AND m1.created_at < m2.created_at')
+# .where('m2.id IS NULL')
