@@ -15,6 +15,12 @@
 #  updated_at        :datetime         not null
 #  author_is_waiting :boolean          default("1"), not null
 #
+# Indexes
+#
+#  index_tickets_on_author_id  (author_id)
+#  index_tickets_on_closed_at  (closed_at)
+#  index_tickets_on_title      (title)
+#
 
 class Ticket < ApplicationRecord
 
