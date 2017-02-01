@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170128202520) do
+ActiveRecord::Schema.define(version: 20170201204006) do
 
   create_table "ticket_messages", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string   "body"
@@ -23,11 +23,12 @@ ActiveRecord::Schema.define(version: 20170128202520) do
   end
 
   create_table "tickets", unsigned: true, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
-    t.string   "title",      null: false
+    t.string   "title",                            null: false
     t.datetime "closed_at"
-    t.integer  "author_id",  null: false, unsigned: true
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.integer  "author_id",                        null: false, unsigned: true
+    t.datetime "created_at",                       null: false
+    t.datetime "updated_at",                       null: false
+    t.boolean  "author_is_waiting", default: true, null: false
     t.index ["author_id"], name: "index_tickets_on_author_id", using: :btree
     t.index ["closed_at"], name: "index_tickets_on_closed_at", using: :btree
     t.index ["title"], name: "index_tickets_on_title", using: :btree

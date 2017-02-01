@@ -7,12 +7,14 @@
 #
 # Table name: tickets
 #
-#  id         :integer          not null, primary key
-#  title      :string(255)      not null
-#  closed_at  :datetime
-#  author_id  :integer
-#  created_at :datetime         not null
-#  updated_at :datetime         not null
+#  id                :integer          not null, primary key
+#  title             :string(255)      not null
+#  closed_at         :datetime
+#  author_id         :integer          not null
+#  created_at        :datetime         not null
+#  updated_at        :datetime         not null
+#  author_is_waiting :boolean          default("1"), not null
+#
 
 class Ticket < ApplicationRecord
 
@@ -51,6 +53,13 @@ class Ticket < ApplicationRecord
   # Set the +closed_at+ time and return it.
   def close
     self.closed_at = Time.zone.now
+  end
+
+  # == Presentation
+
+  # Return the username of the author by calling +author.username+.
+  def author_username
+    author.username
   end
 
 end
