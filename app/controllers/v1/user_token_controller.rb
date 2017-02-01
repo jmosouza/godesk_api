@@ -19,7 +19,7 @@ class V1::UserTokenController < Knock::AuthTokenController
       authenticate
       create
     else
-      render json: customer.errors, status: :unprocessable_entity
+      render json: customer.errors.full_messages, status: :unprocessable_entity
     end
   end
 
