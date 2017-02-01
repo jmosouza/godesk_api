@@ -9,7 +9,7 @@ Rails.application.routes.draw do
     post 'customer_signup' => 'user_token#customer_signup'
 
     # Resources
-    resources :tickets, only: :index
+    resources :tickets, only: [ :index, :show ]
 
   end
 

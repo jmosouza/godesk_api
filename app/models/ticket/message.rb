@@ -20,6 +20,7 @@
 #
 
 class Ticket::Message < ApplicationRecord
+  include BelongsToAuthor
 
   ## :nodoc:
   # Ticket::Message belongs to a Ticket and to an Author.
@@ -30,5 +31,18 @@ class Ticket::Message < ApplicationRecord
   ## :nodoc:
   # The text body is mandatory.
   validates :body, presence: true
+
+  ## :nodoc: API
+
+  acts_as_api
+
+  api_accessible :in_ticket do |t|
+    t.add :id
+    t.add :body
+    t.add :author_id
+    t.add :author_username
+    t.add :created_at
+    t.add :updated_at
+  end
 
 end

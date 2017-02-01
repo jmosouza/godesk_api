@@ -69,3 +69,4 @@ gem 'kaminari'
 
 # Models
 gem 'activerecord-import'
+gem 'acts_as_api', '~> 1.0.0'

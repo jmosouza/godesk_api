@@ -23,11 +23,13 @@
 #
 
 class Ticket < ApplicationRecord
+  include BelongsToAuthor
 
   ## :nodoc:
   # A ticket belongs to an author.
   # The author must be a customer.
   belongs_to :author, class_name: Customer
+  has_many :messages
 
   ## :nodoc:
   # Validate the presence of a title.
@@ -61,11 +63,23 @@ class Ticket < ApplicationRecord
     self.closed_at = Time.zone.now
   end
 
-  # == Presentation
+  ## :nodoc: API
 
-  # Return the username of the author by calling +author.username+.
-  def author_username
-    author.username
+  acts_as_api
+
+  api_accessible :index do |t|
+    t.add :id
+    t.add :title
+    t.add :author_id
+    t.add :author_username
+    t.add :author_is_waiting
+    t.add :closed_at
+    t.add :created_at
+    t.add :updated_at
+  end
+
+  api_accessible :show, extend: :index do |t|
+    t.add :messages, template: :in_ticket
   end
 
 end
