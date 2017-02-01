@@ -1,3 +1,7 @@
+# Filter tickets by user type.
+# Customer users can only see their own tickets.
+# Admin and Attendant users can see all tickets.
+# Parameters: search, sort, dir, page, limit
 class V1::TicketsIndexService
 
   def initialize(user, params)
@@ -6,7 +10,7 @@ class V1::TicketsIndexService
   end
 
   def user_accessible_tickets
-    @user_accessible_tickets ||= user_type_tickets
+    @user_accessible_tickets ||= user_type_tickets # cache result
   end
 
   private
@@ -14,10 +18,15 @@ class V1::TicketsIndexService
   attr_reader :user, :params
 
   def user_type_tickets
-    if user.type == 'Customer'
+    if user.type.in? %w( Admin Attendant )
+      all_tickets
+    elsif user.type == 'Customer'
       all_tickets.where(author: user)
     else
-      all_tickets
+      # This condition should never be met under regular conditions.
+      # In case it does, raise a clear error.
+      # Response will be 500.
+      raise "Invalid user type: #{user.type}"
     end
   end
 
