@@ -6,8 +6,8 @@ class V1::TicketsController < V1::ApplicationController
   # See http://guides.rubyonrails.org/caching_with_rails.html#conditional-get-support
   def index
     service = V1::TicketsIndexService.new(current_user, params)
-    @tickets = service.user_accessible_tickets
-    render json: @tickets if stale? @tickets
+    tickets = service.user_accessible_tickets
+    render json: tickets if stale? tickets
   end
 
 end
