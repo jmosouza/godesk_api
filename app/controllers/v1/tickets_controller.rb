@@ -47,11 +47,15 @@ class V1::TicketsController < V1::ApplicationController
       .first
   end
 
-  # Extract params related to ticket.
+  # Extract params related to message.
   #
-  # Do NOT require attributes here because when they are missing this would raise
+  # Do NOT require attributes here because
+  # when they are missing this would raise
+  #
   # +ActionController::ParameterMissing: param is missing or the value is empty+
-  # instead of returning readable validation errors -- e.g. Title can't be blank.
+  #
+  # instead of returning proper validation
+  # errors -- e.g. Title can't be blank.
   def ticket_params
     params[:ticket].permit(:title)
   end

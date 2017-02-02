@@ -25,15 +25,12 @@
 class Ticket < ApplicationRecord
   include BelongsToAuthor
 
-  ## :nodoc:
-  # A ticket belongs to an author.
-  # The author must be a customer.
+  ## :nodoc: a ticket belongs to an author that must be a customer.
   belongs_to :author, required: true, class_name: Customer
   has_many :messages
 
-  ## :nodoc:
-  # Validate the presence of a title.
   validates :title, presence: true
+  validates :author_is_waiting, inclusion: [ true, false ]
 
   # Sort results by a column and direction.
   scope :sorted, -> (column = :updated_at, direction = :desc) do
@@ -45,16 +42,6 @@ class Ticket < ApplicationRecord
     return if query.blank?
     joins(:author).
     where('title LIKE :q OR users.username LIKE :q', q: "%#{query}%")
-  end
-
-  # Return +true+ when the +closed_at+ time is +null+.
-  def is_open?
-    closed_at.blank?
-  end
-
-  # Return +true+ when a call to +is_open?+ would return +false+.
-  def is_closed?
-    !is_open?
   end
 
   # Close the ticket to indicate it is finished.
