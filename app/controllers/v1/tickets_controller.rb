@@ -8,7 +8,6 @@
 #
 # TODO: Authorize all requests.
 class V1::TicketsController < V1::ApplicationController
-  before_action :authenticate_user
 
   # List tickets accessible by the user.
   #
@@ -28,6 +27,15 @@ class V1::TicketsController < V1::ApplicationController
     render_for_api :show, json: ticket if stale? ticket
   end
 
+  def create
+    ticket = current_user.tickets.build(ticket_params)
+    if ticket.save
+      head :created
+    else
+      render_errors ticket.errors.full_messages
+    end
+  end
+
   private
 
   # Find a ticket by +id+ including messages ordered by +created_at+ attribute.
@@ -37,6 +45,15 @@ class V1::TicketsController < V1::ApplicationController
       .includes(messages: :author)
       .order('ticket_messages.created_at DESC')
       .first
+  end
+
+  # Extract params related to ticket.
+  #
+  # Do NOT require attributes here because when they are missing this would raise
+  # +ActionController::ParameterMissing: param is missing or the value is empty+
+  # instead of returning readable validation errors -- e.g. Title can't be blank.
+  def ticket_params
+    params[:ticket].permit(:title)
   end
 
 end

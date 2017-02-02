@@ -8,7 +8,6 @@
 #
 # TODO: Authorize all requests.
 class V1::TicketMessagesController < V1::ApplicationController
-  before_action :authenticate_user
 
   # POST /tickets/:id/messages
   #
@@ -28,9 +27,9 @@ class V1::TicketMessagesController < V1::ApplicationController
 
   # Extract params related to message.
   #
-  # Do NOT require +message+ here because when it is missing this would raise
-  # +ActionController::ParameterMissing: param is missing or the value is empty: message+
-  # instead of returning readable validation errors -- e.g. Body can't be blank.
+  # Do NOT require attributes here because when they are missing this would raise
+  # +ActionController::ParameterMissing: param is missing or the value is empty+
+  # instead of returning readable validation errors -- e.g. Title can't be blank.
   def message_params
     params[:message].permit(:ticket_id, :body)
   end
