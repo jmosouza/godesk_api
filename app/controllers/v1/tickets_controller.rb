@@ -9,6 +9,7 @@
 # TODO: Authorize all requests.
 class V1::TicketsController < V1::ApplicationController
 
+  # GET
   # List tickets accessible by the user.
   #
   # TODO: Authorize tickets.
@@ -18,6 +19,7 @@ class V1::TicketsController < V1::ApplicationController
     render_for_api :index, json: tickets if stale? tickets
   end
 
+  # GET
   # Show a ticket including its messages.
   #
   # TODO: Authorize ticket.
@@ -27,6 +29,10 @@ class V1::TicketsController < V1::ApplicationController
     render_for_api :show, json: ticket if stale? ticket
   end
 
+  # POST
+  # Create a new ticket.
+  # TODO: Authorize ticket.
+  # TODO: Create with a message.
   def create
     ticket = current_user.tickets.build(ticket_params)
     if ticket.save
@@ -34,6 +40,47 @@ class V1::TicketsController < V1::ApplicationController
     else
       render_errors ticket.errors.full_messages
     end
+  end
+
+  # GET
+  # Export PDF report for tickets closed on last month.
+  #
+  # TODO: Authorize report restricting to admin
+  def report
+    # Date range for last month
+    start_date = Time.zone.now.last_month.beginning_of_month
+    final_date = Time.zone.now.beginning_of_month
+
+    # Find all tickets closed on last month
+    service = V1::TicketsIndexService.new(current_user, params)
+    tickets = service.user_accessible_tickets.where('closed_at >= ? AND closed_at < ?', start_date, final_date)
+
+    # e.g. January 2017
+    formatted_month = start_date.strftime('%B %Y')
+
+    # Start PDF
+    pdf = Prawn::Document.new
+    pdf.text "GODESK - CLOSED TICKETS"
+    pdf.text formatted_month
+    pdf.text "---"
+
+    # Blank state
+    if tickets.empty?
+      pdf.text 'No tickets closed this month.'
+    end
+
+    # Content
+    tickets.each do |t|
+      pdf.text t.title
+      pdf.text "Closed at: #{I18n.l t.closed_at, format: :long}"
+      pdf.text "-"
+    end
+
+    # Send file
+    file_name = "report-#{formatted_month.downcase.gsub ' ', '-'}.pdf"
+    file_path = "#{Rails.root}/tmp/#{file_name}"
+    pdf.render_file file_path
+    send_file file_path, type: :pdf, filename: file_name
   end
 
   private

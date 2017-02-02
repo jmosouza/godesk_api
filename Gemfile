@@ -48,9 +48,9 @@ gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 # CORS
 gem 'rack-cors', require: 'rack/cors'
 
-# Authentication and authorization
-
-# TODO Identify mysterious knock issue.
+# Auth
+#
+# TODO Identify mysterious knock gem issue.
 #
 # Knock was throwing an error. I switched to git source and the error is gone.
 # Yet I have not identified the difference between rubygems and git sources.
@@ -60,13 +60,14 @@ gem 'rack-cors', require: 'rack/cors'
 # in
 #   V1::UserTokenController
 #
-# Clearly it was trying to use a namespaced model that doesn't exist, it makes sense.
+# Clearly it was trying to use a namespaced model that doesn't exist.
 # But why does it work using the git source? They seem identical.
 gem 'knock', github: 'nsarno/knock'
 
 # Controllers
-gem 'kaminari'
+gem 'kaminari' # pagination
+gem 'prawn' # pdf generation
 
 # Models
-gem 'activerecord-import'
-gem 'acts_as_api', '~> 1.0.0'
+gem 'activerecord-import' # one-query sql insert
+gem 'acts_as_api', '~> 1.0.0' # api response rendering
