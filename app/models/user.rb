@@ -35,8 +35,8 @@ class User < ApplicationRecord
 
   ## :nodoc:
   # A user has many tickets and ticket messages.
-  has_many :tickets
-  has_many :ticket_messages
+  has_many :tickets, foreign_key: :author_id
+  has_many :ticket_messages, foreign_key: :author_id, class_name: Ticket::Message
 
   ## :nodoc:
   # Customize the knock gem behaviour (jwt).

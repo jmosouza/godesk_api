@@ -13,4 +13,12 @@ class V1::ApplicationController < ActionController::API
   # See https://github.com/fabrik42/acts_as_api/issues/104#issuecomment-276059000
   include ActsAsApi::Rendering
 
+  # Render an array of human readable strings as json in a root node +errors+.
+  def render_errors(errors)
+    raise unless errors.is_a? Array
+    strings = errors.select { |e| e.is_a? String }
+    raise if strings.empty?
+    render json: { errors: strings }, status: :unprocessable_entity
+  end
+
 end

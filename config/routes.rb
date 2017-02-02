@@ -1,4 +1,4 @@
-require 'api_constraint'
+require 'api_constraint' # see lib/api_constraint.rb
 
 Rails.application.routes.draw do
 
@@ -9,7 +9,8 @@ Rails.application.routes.draw do
     post 'customer_signup' => 'user_token#customer_signup'
 
     # Resources
-    resources :tickets, only: [ :index, :show ]
+    resources :tickets,  only: [ :index, :show ]
+    resources :ticket_messages, only: [ :create ]
 
   end
 

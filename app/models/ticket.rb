@@ -28,7 +28,7 @@ class Ticket < ApplicationRecord
   ## :nodoc:
   # A ticket belongs to an author.
   # The author must be a customer.
-  belongs_to :author, class_name: Customer
+  belongs_to :author, required: true, class_name: Customer
   has_many :messages
 
   ## :nodoc:
