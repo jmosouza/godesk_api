@@ -14,8 +14,8 @@ env:
   - RAILS_ENV=test
 services:
   - mysql
-before_install:
-  - rails db:create
-  - rails db:seed
+before_script:
+  - bundle exec rails db:create
+  - bundle exec rails db:seed
 script:
   - bundle exec rspec
