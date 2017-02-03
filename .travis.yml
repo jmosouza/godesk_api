@@ -14,9 +14,8 @@ env:
   - RAILS_ENV=test
 services:
   - mysql
-before_install:
-  - mysql -e 'CREATE DATABASE godesk_api_test;'
 before_script:
+  - bundle exec rails db:create
   - bundle exec rails db:seed
 script:
   - bundle exec rspec
