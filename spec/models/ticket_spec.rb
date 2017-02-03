@@ -21,9 +21,7 @@ require 'rails_helper'
 
 RSpec.describe Ticket, type: :model do
 
-  before :all do
-    @customer = Customer.create username: 'ticketman', password: '123456'
-  end
+  fixtures :users
 
   it 'requires an author' do
     t = Ticket.new
@@ -38,18 +36,17 @@ RSpec.describe Ticket, type: :model do
   end
 
   it 'is open when created' do
-    t = Ticket.new author: @customer, title: 'i need help'
+    author = users(:customer_0)
+    t = Ticket.new author: author, title: 'i need help'
     expect(t.save).to be true
-    expect(t.is_open?).to be true
-    expect(t.is_closed?).to be false
+    expect(t.closed_at).to be nil
   end
 
   it 'can be closed' do
-    t = Ticket.new author: @customer, title: 'i need help'
+    author = users(:customer_0)
+    t = Ticket.new author: author, title: 'i need help'
     time_closed = t.close
     expect(t.save).to be true
-    expect(t.is_open?).to be false
-    expect(t.is_closed?).to be true
     expect(Time.at t.closed_at.to_i).to eq Time.at(time_closed.to_i)
   end
 

@@ -19,12 +19,7 @@ require 'rails_helper'
 
 RSpec.describe Ticket::Message, type: :model do
 
-  before :all do
-    @customer = Customer.create username: 'ticketer', password: '123456'
-    @attendant = Attendant.create username: 'ticketer', password: '123456'
-    @admin = Admin.create username: 'ticketer', password: '123456'
-    @ticket = Ticket.create author: @customer, title: 'some ticket'
-  end
+  fixtures :users, :tickets
 
   it 'requires an author' do
     t = described_class.new
@@ -45,17 +40,23 @@ RSpec.describe Ticket::Message, type: :model do
   end
 
   it 'can have an author that is a Customer' do
-    t = described_class.new ticket: @ticket, author: @customer, body: 'thanks'
+    author = users(:customer_0)
+    ticket = tickets(:ticket_0)
+    t = described_class.new ticket: ticket, author: author, body: 'thanks'
     expect(t.save).to be true
   end
 
   it 'can have an author that is an Attendant' do
-    t = described_class.new ticket: @ticket, author: @attendant, body: 'thanks'
+    author = users(:attendant_0)
+    ticket = tickets(:ticket_0)
+    t = described_class.new ticket: ticket, author: author, body: 'thanks'
     expect(t.save).to be true
   end
 
   it 'can have an author that is an Admin' do
-    t = described_class.new ticket: @ticket, author: @admin, body: 'thanks'
+    author = users(:admin_0)
+    ticket = tickets(:ticket_0)
+    t = described_class.new ticket: ticket, author: author, body: 'thanks'
     expect(t.save).to be true
   end
 

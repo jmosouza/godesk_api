@@ -1,0 +1,39 @@
+# == Schema Information
+#
+# Table name: users
+#
+#  id              :integer          not null, primary key
+#  username        :string(255)      not null
+#  password_digest :string(255)      not null
+#  type            :string(255)      not null
+#  created_at      :datetime         not null
+#  updated_at      :datetime         not null
+#
+# Indexes
+#
+#  index_users_on_type      (type)
+#  index_users_on_username  (username)
+#
+
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+<% 1.times do |n| %>
+  admin_<%= n %>:
+    username: admin_<%= n %>
+    password_digest: <%= SecureRandom.base58 %>
+    type: 'Admin'
+<% end %>
+
+<% 5.times do |n| %>
+  attendant_<%= n %>:
+    username: attendant_<%= n %>
+    password_digest: <%= SecureRandom.base58 %>
+    type: 'Attendant'
+<% end %>
+
+<% 50.times do |n| %>
+  customer_<%= n %>:
+    username: customer_<%= n %>
+    password_digest: <%= SecureRandom.base58 %>
+    type: 'Customer'
+<% end %>
