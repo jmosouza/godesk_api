@@ -1,0 +1,21 @@
+# Travis CI configuration.
+#
+# Travis CI runs tests automatically on new commits.
+# See the links below for more information on this file.
+#
+# https://docs.travis-ci.com/user/getting-started/
+# https://docs.travis-ci.com/user/customizing-the-build
+# https://docs.travis-ci.com/user/languages/ruby
+
+language: ruby
+rvm:
+  - 2.3
+env:
+  - RAILS_ENV=test
+services:
+  - mysql
+before_install:
+  - rails db:create
+  - rails db:seed
+script:
+  - bundle exec rspec

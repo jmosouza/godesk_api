@@ -1,5 +1,7 @@
 # README
 
+[![Build Status](https://travis-ci.org/jmosouza/godesk_api.svg?branch=master)](https://travis-ci.org/jmosouza/godesk_api)
+
 This README would normally document whatever steps are necessary to get the
 application up and running.
 
