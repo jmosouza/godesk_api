@@ -31,6 +31,10 @@ Rails.application.configure do
 
   config.action_mailer.perform_caching = false
 
+  # Pop emails in the browser.
+  # See https://github.com/ryanb/letter_opener#rails-setup
+  config.action_mailer.delivery_method = :letter_opener
+
   # Print deprecation notices to the Rails logger.
   config.active_support.deprecation = :log
 

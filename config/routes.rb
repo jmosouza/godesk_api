@@ -13,6 +13,7 @@ Rails.application.routes.draw do
       get :report, on: :collection
     end
     resources :ticket_messages, only: [ :create ]
+    resources :attendants, only: [ :create ]
 
   end
 

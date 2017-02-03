@@ -17,19 +17,18 @@ gem 'puma', '~> 3.0'
 # Use ActiveModel has_secure_password
 gem 'bcrypt', '~> 3.1.7'
 
-# Use Rack CORS for handling Cross-Origin Resource Sharing (CORS), making cross-origin AJAX possible
-# gem 'rack-cors'
+# Middleware
+gem 'rack-cors' # cross-origin ajax
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platform: :mri
 
   # Secrets
-  gem 'dotenv-rails'
+  gem 'dotenv-rails' # set env vars from .env
 
   # Tests
-  gem 'rspec-rails', '~> 3.5'
-  gem 'jwt'
+  gem 'rspec-rails', '~> 3.5' # specs
 end
 
 group :development do
@@ -39,7 +38,10 @@ group :development do
   gem 'spring-watcher-listen', '~> 2.0.0'
 
   # Models
-  gem 'annotate'
+  gem 'annotate' # schema comments on models
+
+  # Mailer
+  gem 'letter_opener' # pop emails in the browser
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
@@ -62,12 +64,12 @@ gem 'rack-cors', require: 'rack/cors'
 #
 # Clearly it was trying to use a namespaced model that doesn't exist.
 # But why does it work using the git source? They seem identical.
-gem 'knock', github: 'nsarno/knock'
+gem 'knock', github: 'nsarno/knock' # jwt authentication
 
 # Controllers
 gem 'kaminari' # pagination
-gem 'prawn' # pdf generation
+gem 'prawn'    # pdf generation
 
 # Models
-gem 'activerecord-import' # one-query sql insert
+gem 'activerecord-import'     # one-query sql insert
 gem 'acts_as_api', '~> 1.0.0' # api response rendering
