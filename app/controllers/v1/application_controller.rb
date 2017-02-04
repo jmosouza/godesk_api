@@ -26,7 +26,8 @@ class V1::ApplicationController < ActionController::API
   end
 
   # Render an array of human readable strings as json in a root node +errors+.
-  def render_errors(errors)
+  def render_errors(errors = "Sorry, we can't complete this action now.")
+    errors = [ errors ] if errors.is_a? String
     raise unless errors.is_a? Array
     strings = errors.select { |e| e.is_a? String }
     raise if strings.empty?

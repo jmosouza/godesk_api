@@ -46,8 +46,14 @@ class Ticket < ApplicationRecord
 
   # Close the ticket to indicate it is finished.
   # Set the +closed_at+ time and return it.
+  def open
+    self.closed_at = nil
+  end
+
+  # Close the ticket to indicate it is finished.
+  # Set the +closed_at+ time and return it.
   def close
-    self.closed_at = Time.zone.now
+    self.closed_at ||= Time.zone.now
   end
 
   ## :nodoc: API

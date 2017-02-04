@@ -27,6 +27,32 @@ class V1::TicketsController < V1::ApplicationController
   end
 
   # POST
+  # Open a ticket.
+  def open
+    ticket = Ticket.find(params[:id])
+    authorize! :open, ticket
+    ticket.open
+    if ticket.save
+      head :ok
+    else
+      render_errors
+    end
+  end
+
+  # POST
+  # Close a ticket.
+  def close
+    ticket = Ticket.find(params[:id])
+    authorize! :close, ticket
+    ticket.close
+    if ticket.save
+      head :ok
+    else
+      render_errors
+    end
+  end
+
+  # POST
   # Create a new ticket.
   # TODO: Create with a message.
   def create

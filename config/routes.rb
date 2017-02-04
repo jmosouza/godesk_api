@@ -9,11 +9,13 @@ Rails.application.routes.draw do
     post 'customer_signup' => 'user_token#customer_signup'
 
     # Resources
-    resources :tickets,  only: [ :index, :show, :create ] do
-      get :report, on: :collection
-    end
     resources :ticket_messages, only: [ :create ]
     resources :attendants, only: [ :create ]
+    resources :tickets,  only: [ :index, :show, :create ] do
+      get :report, on: :collection
+      post :open, on: :member
+      post :close, on: :member
+    end
 
   end
 
