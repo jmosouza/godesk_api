@@ -62,6 +62,7 @@ gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 # Clearly it was trying to use a namespaced model that doesn't exist.
 # But why does it work using the git source? They seem identical.
 gem 'knock', github: 'nsarno/knock' # jwt authentication
+gem 'cancancan' # user authorization
 
 # Controllers
 gem 'kaminari' # pagination

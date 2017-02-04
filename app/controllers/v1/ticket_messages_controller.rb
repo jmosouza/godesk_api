@@ -5,18 +5,15 @@
 # The user can only manage messages he has access to.
 # Customer users can only see their own tickets' messages.
 # Admin and Attendant users can see all tickets' messages.
-#
-# TODO: Authorize all requests.
 class V1::TicketMessagesController < V1::ApplicationController
 
   # POST /tickets/:id/messages
   #
   # Create a new message authored by the current user.
   # Toggle the +author_is_waiting+ ticket attribute based on user type.
-  #
-  # TODO: Authorize message
   def create
     message = current_user.ticket_messages.build(message_params)
+    authorize! :create, message
     if message.save
       toggle_author_is_waiting(message)
       head :created

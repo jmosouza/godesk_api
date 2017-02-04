@@ -3,14 +3,12 @@
 # Manage attendants.
 #
 # Only Admins can manage attendants.
-#
-# TODO: Authorize all requests.
 class V1::AttendantsController < V1::ApplicationController
 
   # POST
   # Create a new attendant with random password and email their credentials.
-  # TODO: Authorize attendant.
   def create
+    authorize! :create, Attendant
     email = params.dig :attendant, :email
     if email.blank?
       render_errors ["Email can't be blank"]

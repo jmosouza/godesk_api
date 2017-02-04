@@ -5,36 +5,33 @@
 # The user can only manage tickets he has access to.
 # Customer users can only see their own tickets.
 # Admin and Attendant users can see all tickets.
-#
-# TODO: Authorize all requests.
 class V1::TicketsController < V1::ApplicationController
 
   # GET
   # List tickets accessible by the user.
-  #
-  # TODO: Authorize tickets.
   def index
     service = V1::TicketsIndexService.new(current_user, params)
     tickets = service.user_accessible_tickets
+    authorized_tickets = tickets.accessible_by(current_ability, :index)
+    raise CanCan::AccessDenied.new if authorized_tickets.size != tickets.size
     render_for_api :index, json: tickets if stale? tickets
   end
 
   # GET
   # Show a ticket including its messages.
-  #
-  # TODO: Authorize ticket.
   def show
     ticket = show_ticket(params[:id])
     raise ActiveRecord::RecordNotFound if ticket.blank?
+    authorize! :show, ticket
     render_for_api :show, json: ticket if stale? ticket
   end
 
   # POST
   # Create a new ticket.
-  # TODO: Authorize ticket.
   # TODO: Create with a message.
   def create
     ticket = current_user.tickets.build(ticket_params)
+    authorize! :create, ticket
     if ticket.save
       head :created
     else
@@ -44,9 +41,9 @@ class V1::TicketsController < V1::ApplicationController
 
   # GET
   # Export PDF report for tickets closed on last month.
-  #
-  # TODO: Authorize report restricting to admin
   def report
+    authorize! :report, Ticket
+
     # Date range for last month
     start_date = Time.zone.now.last_month.beginning_of_month
     final_date = Time.zone.now.beginning_of_month
