@@ -42,7 +42,7 @@ Use it to set local environment variables. Example:
 DATABASE_PASSWORD=your_mysql_password
 ```
 
-## Test
+## Tests
 
 Use the following command to run tests.
 
@@ -50,12 +50,32 @@ Use the following command to run tests.
 rspec
 ```
 
-Only models are covered at this point. Write new tests at the `specs` directory.
+Write new tests at the `specs` directory.
+
+### What is already covered
+
+* Models
 
 ### What still needs coverage
 
 * Controllers
 * Integration
+
+## HTTP Caching
+
+The API takes advantage of HTTP caching to give faster responses.
+See the following documentation for a reference:
+http://guides.rubyonrails.org/caching_with_rails.html#conditional-get-support
+
+## API versioning
+
+The API is ready for versioning.
+To create a new version, copy the code from the latest module available
+and change the module accordingly -- e.g. V1 to V2.
+
+For example, you would need to copy:
+* `app/controllers/v1` to `app/controllers/v1`
+* in routes `scope module: :v1, constraints: api_version(1)` to `:v1` and `api_version(2)`
 
 ## Deploy
 
